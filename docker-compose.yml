@@ -13,7 +13,7 @@ services:
     command: "--bind_ip_all --replSet rs0"
 
   replica:
-    ontainer_name: replica
+    container_name: replica
     build:
       context: .
       dockerfile: ./Dockerfile
