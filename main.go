@@ -4,8 +4,10 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"time"
 
 	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 var mongourl string
@@ -22,4 +24,16 @@ func main() {
 	}
 	defer session.Close()
 	log.Printf("connect %v", session)
+
+	ticker := time.NewTicker(2 * time.Second)
+	for range ticker.C {
+		result := bson.M{}
+		err = session.DB("test").Run(bson.D{{"serverStatus", 1}}, &result)
+		if err != nil {
+			log.Printf("get server status failed: %s", err)
+		} else {
+			fmt.Println(result)
+		}
+	}
+
 }
