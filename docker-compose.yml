@@ -4,20 +4,23 @@ services:
 
   mongo1:
     image: mongo
-    networks:
-      - db
+    container_name: mongo1
+    command: "--bind_ip_all --replSet rs0"
+
+  mongo2:
+    image: mongo
+    container_name: mongo2
+    command: "--bind_ip_all --replSet rs0"
 
   replica:
+    ontainer_name: replica
     build:
       context: .
       dockerfile: ./Dockerfile
     image: replica
-    command: --mongourl=mongo1
+    command: "--mongourl1=mongo1 --mongourl2=mongo2"
     depends_on: 
       - mongo1
-    networks:
-      - db
+      - mongo2
     restart: always
 
-networks:
-  db:
