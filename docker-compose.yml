@@ -12,13 +12,33 @@ services:
     container_name: mongo2
     command: "--bind_ip_all --replSet rs0"
 
+  arbiter1:
+    image: mongo
+    container_name: arbiter1
+    command: "--bind_ip_all --replSet rs0"
+
+  # arbiter2:
+  #   image: mongo
+  #   container_name: arbiter2
+  #   command: "--bind_ip_all --replSet rs0"
+
+  # arbiter3:
+  #   image: mongo
+  #   container_name: arbiter3
+  #   command: "--bind_ip_all --replSet rs0"
+
+  # arbiter4:
+  #   image: mongo
+  #   container_name: arbiter4
+  #   command: "--bind_ip_all --replSet rs0"
+
   replica:
     container_name: replica
     build:
       context: .
       dockerfile: ./Dockerfile
     image: replica
-    command: "--mongourl1=mongo1 --mongourl2=mongo2"
+    command: "--mongourl1=mongo1 --mongourl2=mongo2 --arb1=arbiter1" # --arb2=arbiter2 --arb3=arbiter3 --arb4=arbiter4"
     depends_on: 
       - mongo1
       - mongo2
