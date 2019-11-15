@@ -24,3 +24,25 @@ services:
       - mongo2
     restart: always
 
+  client1:
+    container_name: client1
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
+    image: client
+    command: "--mongourl=mongo1"
+    depends_on: 
+      - mongo1
+    restart: always
+
+  client2:
+    container_name: client2
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
+    image: client
+    command: "--mongourl=mongo2"
+    depends_on: 
+      - mongo2
+    restart: always
+

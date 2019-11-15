@@ -19,7 +19,10 @@ func main() {
 	flag.Parse()
 
 	log.Printf("start dial to %s", mongourl1)
-	session, err := mgo.Dial(mongourl1 + "?connect=direct")
+	// replSet initiate got NodeNotElectable: This node, mongo2:27017, with _id MemberId(1)
+	// is not electable under the new configuration version 1 for replica set rs0 while validating
+	// session, err := mgo.Dial(mongourl1 + "," + mongourl2 + "/?connect=direct")
+	session, err := mgo.Dial(mongourl1 + "/?connect=direct")
 	if err != nil {
 		message := fmt.Sprintf("dial to %s failed: %s", mongourl1, err)
 		log.Fatal(message)
