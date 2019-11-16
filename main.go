@@ -22,8 +22,6 @@ func main() {
 	flag.StringVar(&mongourl2, "mongourl2", "", "")
 	flag.StringVar(&arb1, "arb1", "", "")
 	flag.StringVar(&arb2, "arb2", "", "")
-	flag.StringVar(&arb3, "arb3", "", "")
-	flag.StringVar(&arb4, "arb4", "", "")
 	flag.Parse()
 
 	log.Printf("start dial to %s", mongourl1)
@@ -48,11 +46,9 @@ func main() {
 			"_id": "rs0",
 			"members": []bson.M{
 				{"_id": 0, "host": mongourl1},
-				{"_id": 1, "host": mongourl2}, // slave
+				{"_id": 1, "host": mongourl2, "priority": 0}, // slave
 				{"_id": 2, "host": arb1, "arbiterOnly": true, "priority": 0},
-				// {"_id": 3, "host": arb2, "arbiterOnly": true, "priority": 0},
-				// {"_id": 4, "host": arb3, "arbiterOnly": true, "priority": 0},
-				// {"_id": 5, "host": arb4, "arbiterOnly": true, "priority": 0},
+				// {"_id": 3, "host": arb2, "arbiterOnly": true, "priority": 0}, // slave
 			},
 		}
 		result := bson.M{}
